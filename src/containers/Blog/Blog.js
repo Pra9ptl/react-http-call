@@ -5,16 +5,29 @@ import FullPost from '../../components/FullPost/FullPost';
 import NewPost from '../../components/NewPost/NewPost';
 import './Blog.css';
 import Axios from 'axios';
+// import post from '../../components/Post/Post';
 
 class Blog extends Component {
 
     state = {
-        posts: []
+        posts: [],
+        selectedPostId: null
+    }
+
+    postSelectedHandler = (id) => {
+        this.setState({ selectedPostId: id });
     }
 
     componentDidMount() {
         Axios.get('https://jsonplaceholder.typicode.com/posts').then(response => {
-            this.setState({posts: response.data});
+            const posts = response.data.slice(0, 4);
+            const updatedPosts = posts.map(post => {
+                return {
+                    ...post,
+                    author: 'Jarvis'
+                }
+            });
+            this.setState({ posts: updatedPosts });
             // console.log(response);
         });
     }
@@ -23,23 +36,27 @@ class Blog extends Component {
 
         const posts = this.state.posts.map(
             post => {
-                return <Post key={post.id} title={post.title} />
+                return <Post 
+                key={post.id} 
+                title={post.title} 
+                author={post.author} 
+                clicked={() => this.postSelectedHandler(post.id)} />
             }
         );
 
-        return (
-            <div>
-                <section className="Posts">
-                    {posts}
-                </section>
-                <section>
-                    <FullPost />
-                </section>
-                <section>
-                    <NewPost />
-                </section>
-            </div>
-        );
+return (
+    <div>
+        <section className="Posts">
+            {posts}
+        </section>
+        <section>
+            <FullPost id={this.state.selectedPostId} />
+        </section>
+        <section>
+            <NewPost />
+        </section>
+    </div>
+);
     }
 }
 
