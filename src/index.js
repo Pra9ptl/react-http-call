@@ -5,6 +5,8 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import Axios from 'axios';
 
+Axios.defaults.baseURL = 'https://jsonplaceholder.typicode.com';
+
 Axios.interceptors.request.use(request => {
     console.log(request);
     return request;
