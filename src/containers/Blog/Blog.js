@@ -35,9 +35,10 @@ class Blog extends Component {
                 {/* <Route path="/" exact render={() => <h1>Home</h1>} />
                 <Route path="/" render={() => <h1>Home 2</h1>} /> */}
                 <Switch>
-                    {this.state.auth ? <Route path="/new-post" component={NewPost} /> : null }
+                    {this.state.auth ? <Route path="/new-post" component={NewPost} /> : null}
                     <Route path="/posts" component={Posts} />
-                    <Redirect from="/" to="/Posts" />
+                    <Route render={() => <h1>Route not Found</h1>} />
+                    {/* <Redirect from="/" to="/Posts" /> */}
                 </Switch>
             </div>
         );
