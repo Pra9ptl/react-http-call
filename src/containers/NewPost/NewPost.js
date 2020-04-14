@@ -31,7 +31,8 @@ class NewPost extends Component {
     render () {
         let redirect = null;
         if(this.state.submitted){
-            redirect = <Redirect to="/posts" />;
+            this.props.history.push('/posts');
+            // redirect = <Redirect to="/posts" />;
         }
         return (
             <div className="NewPost">
